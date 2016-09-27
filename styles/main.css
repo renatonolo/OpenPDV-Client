@@ -1,0 +1,59 @@
+body{
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Raleway', sans-serif;
+}
+
+div.top{
+    width: 100%;
+    height: 120px;
+    background-color: #333;
+}
+
+span#systemName{
+    position: relative;
+    left: 35px;
+    top: 25px;
+    color: white;
+    font-size: 26pt;
+}
+
+span#systemSubname{
+    position: relative;
+    left: 35px;
+    top: 25px;
+    color: #8BC53F;
+    font-size: 12pt;
+}
+
+.panel-heading h3 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: normal;
+    width: 75%;
+    padding-top: 8px;
+}
+
+.thumbnails {text-align: center;}
+.thumbnails .thumbnail {display: inline-block; margin: 0 5px; min-width: 200px; cursor: pointer;}
+
+ul.autocomplete {
+    /*position: absolute;*/
+    width: 80%;
+    padding: 0px;
+    border: 1px solid black;
+}
+
+.autocomplete li {
+    text-decoration: none;
+    list-style: none;
+    border-bottom: 1px solid #ccc;
+    margin: 20px;
+}
+
+.autocomplete li:hover{
+    cursor: pointer;
+    border-bottom: 2px solid #8BC53F;
+    padding-left: 10px;
+}

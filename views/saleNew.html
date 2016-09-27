@@ -1,0 +1,127 @@
+<div class="container">
+    <div class="row">
+        <div class="col-lg-7">
+            <h1>Produto</h1>
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Nome ou código de barras..." #txtProductSearch (keyup)="getProduct(txtProductSearch.value)"/>
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" (click)="getProduct(txtProductSearch.value)">Buscar</button>
+                </span>
+            </div>
+            <ul class="autocomplete" *ngIf="productsSearch.length > 0">
+                <li *ngFor="let product of productsSearch;" (click)="selectProduct(product)"><b>{{product.productName}}</b><br><small>{{product.brand.name}}</small></li>
+            </ul>
+            <br/><br/>
+            <div class="panel panel-default" *ngIf="selectedProduct">
+                <div class="panel-heading" style="padding-top: 10px;">
+                    <b>{{selectedProduct.productName}}</b>
+                    <div class="btn-group btn-group-sm pull-right" style="position: relative; top: -5px;">
+                        <button type="button" class="btn btn-success" (click)="addProduct(txtAmount.value); txtAmount.value = '';"><span class="glyphicon glyphicon-plus"></span> Adicionar</button>
+                    </div>
+				</div>
+                <div class="panel-body">
+                    <div class="alert alert-danger" role="alert" *ngIf="error!=''">{{error}}</div>
+                    <div class="form-group">
+                        <label for="txtAmount">Quantidade:</label>
+                        <input type="number" step="1" id="txtAmount" class="form-control" #txtAmount/>
+                    </div>
+                    <b>Marca</b>: {{selectedProduct.brand.name}}<br/>
+                    <b>Descrição</b>: {{selectedProduct.description}}<br/>
+                    <b>Valor</b>: R$ {{selectedProduct.sellPrice | moneyPipe}}<br/>
+                    <b>Código de barras</b>: {{selectedProduct.barcode}}<br/>
+                </div>
+            </div>
+            <!--Choose payment-->
+            <div class="panel panel-default" *ngIf="endSale">
+                <div class="panel-heading" style="padding-top: 10px;">
+                    Finalizar a venda
+                </div>
+                <div class="panel-body">
+                    <span class="label label-success" style="font-size: 18pt;">R$ {{totalPrice | moneyPipe}}</span>
+                    <span *ngIf="sale.saleOff > 0"> - </span>
+                    <span *ngIf="sale.saleOff > 0" class="label label-warning" style="font-size: 18pt;">R$ {{sale.saleOff | moneyPipe}}</span>
+                    <span *ngIf="sale.saleOff > 0"> = </span>
+                    <span *ngIf="sale.saleOff > 0" class="label label-info" style="font-size: 18pt;">R$ {{totalPrice - sale.saleOff | moneyPipe}}</span>
+                    <h2>Forma de pagamento:</h2>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-default" (click)="choosePayment(0)">Dinheiro</button>
+                        <button type="button" class="btn btn-default" (click)="choosePayment(1)">Cartão Débito</button>
+                        <!--<button type="button" class="btn btn-default" (click)="choosePayment(2)">Parcelado</button>-->
+                    </div>
+                </div>
+            </div>
+            <!--Money Payment-->
+            <div class="panel panel-default" *ngIf="moneyPayment">
+                <div class="panel-heading" style="padding-top: 10px;">
+                    Pagamento em dinheiro
+                </div>
+                <div class="input-group" style="margin: 1%;">
+                    <span class="input-group-addon">R$</span>
+                    <input class="form-control" placeholder="Valor..." type="text" (keyup)="addMoneyPayment(txtMoneyValue.value)" #txtMoneyValue/>
+                </div>
+                <br/><br/>
+                <span class="label label-info" style="font-size: 16pt; margin-left: 1%; ">Troco: R$ {{change | moneyPipe}}</span>&nbsp;
+                <button type="button" class="btn btn-success" (click)="finishMoneyPayment(txtMoneyValue.value)">Finalizar pagamento</button><br/><br/>
+            </div>
+            <!--Debit Payment-->
+            <div class="panel panel-default" *ngIf="debitPayment">
+                <div class="panel-heading" style="padding-top: 10px;">
+                    Pagamento em cartão de débito
+                </div>
+                <div class="input-group" style="margin: 1%;">
+                    <span class="input-group-addon">R$</span>
+                    <input class="form-control" placeholder="Valor..." type="text" (keyup)="addDebitPayment(txtDebitValue.value)" #txtDebitValue/>
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" (click)="addDebitPayment(totalPrice-sale.saleOff); txtDebitValue.value = totalPrice - sale.saleOff;">Pagar tudo</button>
+                    </span>
+                </div>
+                <div class="btn-group" role="group" style="margin-left: 1%;">
+                    <button type="button" class="btn btn-default" (click)="chooseCard('MasterCard')">MasterCard</button>
+                    <button type="button" class="btn btn-default" (click)="chooseCard('Visa')">Visa</button>
+                </div>
+                <br/><br/>
+                <span class="label label-info" style="font-size: 16pt; margin-left: 1%; ">Falta: R$ {{change | moneyPipe}}</span>&nbsp;
+                <button type="button" class="btn btn-success" (click)="finishDebitPayment(txtDebitValue.value)">Finalizar pagamento</button><br/><br/>
+            </div>
+            <!--Intallment Payment-->
+            <!--<div class="panel panel-default" *ngIf="installmentPayment">
+                <div class="panel-heading" style="padding-top: 10px;">
+                    Pagamento parcelado
+                </div>
+                <div class="input-group" style="margin: 1%;" *ngFor="let i of installmentArr; let i=index;">
+                    <span class="input-group-addon">Parcela {{i}}: </span>
+                    <input class="form-control" placeholder="Valor" type="text" #txtInstallmentValue value="{{installmentArr[i] | moneyPipe}}" (keyup)="updateInstallment(txtInstallmentValue.value, i);"/>
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" (click)="addInstallmentNum()">+</button>
+                    </span>
+                </div>
+                <br/><br/>
+                <span class="label label-info" style="font-size: 16pt; margin-left: 1%; ">Falta: R$ {{change | moneyPipe}}</span>&nbsp;
+                <button type="button" class="btn btn-success" (click)="finishInstallmentPayment()">Finalizar pagamento</button><br/><br/>
+            </div>-->
+        </div>
+        <!--Products-->
+        <div class="col-lg-5" *ngIf="sale && sale.products.length > 0">
+            <table class="table table-condensed">
+                <tr>
+                    <th>Qtd.</th>
+                    <th>Produto</th>
+                    <th>Valor</th>
+                    <th>Ação</th>
+                </tr>
+                <tr *ngFor="let p of sale.products; let i=index">
+                    <td>{{sale.amount[i]}}</td>
+                    <td>{{p.productName}}</td>
+                    <td>R$ {{sale.values[i] | moneyPipe}}</td>
+                    <td><button class="btn btn-danger btn-xs" (click)="removeItem(i)"><span class="glyphicon glyphicon-remove-circle"></span></button></td>
+                </tr>
+                <tr>
+                    <td colspan=2>Total</td>
+                    <td colspan=2>R$ {{totalPrice | moneyPipe}}</td>
+                </tr>
+            </table>
+            Desconto: <input type="text" class="form-control" placeholder="em R$..." #txtSaleOff/><br/>
+            <button type="button" class="btn btn-success btn-block" (click)="finishSale(txtSaleOff.value)">Finalizar venda</button>
+        </div>
+    </div>
+</div>

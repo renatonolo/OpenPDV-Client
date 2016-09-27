@@ -1,0 +1,20 @@
+<div class="panel panel-primary" style="width: 80%; margin: 0px auto;">
+    <div class="panel-heading">Cadastrar marca</div>
+    <div class="panel-body">
+        <div class="alert alert-danger" role="alert" *ngIf="formError!=''">{{formError}}</div>
+        <form [ngFormModel]="brandForm" (ngSubmit)="insertBrand()">
+            <div class="form-group">
+                <label for="txtName">Marca:</label>
+                <input type="text" id="txtName" class="form-control" required ngControl="name"/>
+            </div>
+            <div class="form-group">
+                <label for="slcStatus">Status:</label>
+                <select class="form-control" id="slcStatus" ngControl="status">
+                    <option value="0">Desativo</option>
+                    <option value="1">Ativo</option>
+                </select>
+            </div>
+            <button type="submit" [disabled]="!brandForm.valid" class="btn btn-default pull-right">Salvar</button>
+        </form>
+    </div>
+</div>

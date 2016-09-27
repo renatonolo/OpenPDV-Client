@@ -1,0 +1,43 @@
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <a class="navbar-brand">Lista de marcas</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <form class="navbar-form navbar-right" role="search">
+                <div class="form-group">
+                <input type="text" (keyup)="search(txtSearch.value, true)" class="form-control" #txtSearch placeholder="Search">
+                </div>
+                <button type="submit" (click)="search(txtSearch.value, false)" class="btn btn-default">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Pesquisar
+                </button>
+            </form>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<div class="panel panel-primary" style="width: 80%; margin: 0px auto;">
+    <!-- Default panel contents -->
+    <div class="panel-heading">Lista de marcas</div>
+
+    <!-- Table -->
+    <table class="table table-hover">
+        <tr>
+            <th>Marca</th>
+            <th>Status</th>
+            <th style="width: 80px; text-align: center;">Ação</th>
+        </tr>
+        <tr *ngFor="let brand of brands;">
+            <td>{{brand.name}}</td>
+            <td><span class="label label-danger" *ngIf="brand.status == 0">Desativo</span><span class="label label-success" *ngIf="brand.status == 1">Ativo</span></td>
+            <td style="width: 80px; text-align: center;">
+                <button class="btn btn-warning btn-xs" (click)="goToDetails(brand.uuid)"><span class="glyphicon glyphicon-pencil"></span></button>
+                <button class="btn btn-danger btn-xs" (click)="deactive(brand)" *ngIf="brand.status == 1"><span class="glyphicon glyphicon-ban-circle"></span></button>
+                <button class="btn btn-success btn-xs" (click)="active(brand)" *ngIf="brand.status == 0"><span class="glyphicon glyphicon-ok-circle"></span></button>
+            </td>
+        </tr>
+    </table>
+</div>

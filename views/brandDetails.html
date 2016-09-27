@@ -1,0 +1,32 @@
+<div class="panel panel-primary" style="width: 80%; margin: 0px auto;">
+    <div class="panel-heading">Detalhes da marca</div>
+    <div class="panel-body">
+        <div class="alert alert-danger" role="alert" *ngIf="formError!=''">{{formError}}</div>
+        <form [ngFormModel]="brandForm" (ngSubmit)="saveBrand()">
+            <div class="form-group">
+                <label for="txtName">Nome da marca:</label>
+                <input type="text" id="txtName" class="form-control" required ngControl="name"/>
+            </div>
+            <div class="form-group">
+                <label for="slcStatus">Status:</label>
+                <select class="form-control" id="slcStatus" ngControl="status">
+                    <option value="0">Desativo</option>
+                    <option value="1">Ativo</option>
+                </select>
+            </div>
+            Quantidade de produtos: {{countProducts}}
+            <button type="submit" [disabled]="!brandForm.valid" class="btn btn-default pull-right">Salvar</button>
+        </form>
+        <br/>
+        <h4>Produtos desta marca</h4>
+        <!-- Table -->
+        <table class="table table-hover">
+            <tr>
+                <th>Nome</th>
+            </tr>
+            <tr *ngFor="let product of products;" (click)="goToProduct(product.uuid)" style="cursor: pointer;">
+                <td>{{product.productName}}</td>
+            </tr>
+        </table>
+    </div>
+</div>

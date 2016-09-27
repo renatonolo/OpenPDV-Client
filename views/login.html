@@ -1,0 +1,61 @@
+<div class="container">
+    <!-- Modal -->
+    <div id="myModal" class="modal show" role="dialog" *ngIf="varShowSettings==true">
+        <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+
+            <form (ngSubmit)="saveSettings()">
+                <div class="modal-header">
+                    <button type="button" class="close" (click)="hideSettings()">&times;</button>
+                    <h4 class="modal-title">Settings</h4>
+                </div>
+
+                <div class="modal-body">
+                    <div class="alert alert-danger" role="alert" *ngIf="msgErrorSettings!=''">{{msgErrorSettings}}</div>
+
+                    <div class="form-group">
+                        <label for="txtHost">Host API</label>
+                        <input type="text" class="form-control" id="txtHost" [(ngModel)]="txtHost" placeholder="127.0.0.1">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="txtPort">Port API</label>
+                        <input type="text" class="form-control" id="txtPort" [(ngModel)]="txtPort" placeholder="8000">
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-success" value="Save"/>
+                    <button type="button" class="btn btn-default" (click)="hideSettings()">Cancel</button>
+                </div>
+            </form>
+
+        </div>
+
+        </div>
+    </div>
+
+    <!--Login page-->
+    <button type="button" class="btn btn-default pull-right" style="margin-top: 10px;" (click)="showSettings()">
+        <span class="glyphicon glyphicon-cog" style="font-size: 16px;" aria-hidden="false"></span>
+    </button>
+    <form [ngFormModel]="loginForm" class="form-signin">
+        <h2 class="form-signin-heading">Login</h2>
+        <div class="alert alert-danger" role="alert" *ngIf="loginError!=''">{{loginError}}</div>
+
+        <label for="inputUsername" class="sr-only">Username</label>
+        <input type="text" id="inputUsername" class="form-control" ngControl="username" placeholder="Username" required autofocus>
+
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" id="inputPassword" class="form-control" ngControl="password" placeholder="Password" required>
+
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" #ckbRememberMe value="remember-me" (change)="checkRememberMe(ckbRememberMe.checked)" ngControl="rememberMe"> Remember me
+            </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" [disabled]="!loginForm.valid" (click)="doLogin()">Sign in</button>
+    </form>
+</div>

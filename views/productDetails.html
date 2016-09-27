@@ -1,0 +1,65 @@
+<div class="panel panel-primary" style="width: 80%; margin: 0px auto;">
+    <div class="panel-heading">Detalhes do produto</div>
+    <div class="panel-body">
+        <div class="alert alert-danger" role="alert" *ngIf="formError!=''">{{formError}}</div>
+        <form [ngFormModel]="productForm" (ngSubmit)="saveProduct()">
+            <div class="form-group">
+                <label for="txtProductName">Produto:</label>
+                <input type="text" id="txtProductName" class="form-control" required ngControl="productName"/>
+            </div>
+            <div class="form-group">
+                <label for="txtDescription">Descrição:</label>
+                <textarea id="txtDescription" class="form-control" ngControl="description"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="txtUnitPrice">Preço de compra (unitário):</label>
+                <input type="number" step="0.05" id="txtUnitPrice" class="form-control" required ngControl="unitPrice"/>
+            </div>
+            <div class="form-group">
+                <label for="txtProfit">Lucro (%):</label>
+                <input type="number" id="txtProfit" class="form-control" required ngControl="profit"/>
+            </div>
+            <div class="form-group">
+                <label for="txtSellPrice">Preço de venda:</label>
+                <input type="number" step="0.05" id="txtSellPrice" class="form-control" required ngControl="sellPrice"/>
+            </div>
+            <div class="form-group">
+                <label for="txtTax">Impostos:</label>
+                <input type="number" id="txtTax" class="form-control" required ngControl="tax"/>
+            </div>
+            <div class="form-group">
+                <label for="slcMeasure">Unidade de medida:</label>
+                <select class="form-control" id="slcMeasure" ngControl="measure">
+                    <option value="0">Unidade</option>
+                    <option value="1">Peso</option>
+                    <option value="2">Metros</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="slcBrand">Marca:</label>
+                <select class="form-control" id="slcBrand" ngControl="brand">
+                    <option [value]="i.uuid" *ngFor="let i of brandsArray">{{i.name}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="txtProductGroup">Grupo:</label>
+                <input type="text" id="txtProductGroup" class="form-control" ngControl="productGroup"/>
+            </div>
+            <div class="form-group">
+                <label for="slcNacionality">País:</label>
+                <select class="form-control" id="slcNacionality" ngControl="nacionality">
+                    <option [value]="i.id" *ngFor="let i of nacionalitiesArray">{{i.ptName}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="txtBarCode">Código de barras:</label>
+                <input type="text" id="txtBarCode" class="form-control" ngControl="barCode"/>
+            </div>
+            <div class="form-group">
+                <label for="txtStock">Quantidade em estoque:</label>
+                <input type="number" id="txtStock" class="form-control" ngControl="stock"/>
+            </div>
+            <button type="submit" [disabled]="!productForm.valid" class="btn btn-default pull-right">Salvar</button>
+        </form>
+    </div>
+</div>

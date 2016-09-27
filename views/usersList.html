@@ -1,0 +1,56 @@
+<div class="container">
+    <div id="myModal" class="modal show" role="dialog" *ngIf="user!=null">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" (click)="hideUser()">&times;</button>
+                    <h4 class="modal-title">Detalhes do usuário</h4>
+                </div>
+
+                <div class="modal-body">
+                    <b>Nome: </b>{{user.name}}<br/>
+                    <b>Username: </b>{{user.username}}<br/>
+                    <b>Último acesso: </b>{{user.last_login | date: 'dd'}}/{{user.last_login | date:'MM'}}/{{user.last_login | date: 'yyyy'}} {{user.last_login | date: 'HH'}}:{{user.last_login | date: 'mm'}}<br/><br/>
+                    <div *ngIf="username==user.username">
+                        <div class="alert alert-danger" role="alert" *ngIf="updatePasswordError!=''">{{updatePasswordError}}</div>
+                        <div class="form-group">
+                            <label for="txtOldPassword">Senha antiga:</label>
+                            <input type="text" id="txtOldPassword" #txtOldPassword class="form-control"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="txtNewPassword">Nova senha:</label>
+                            <input type="text" id="txtNewPassword" #txtNewPassword class="form-control"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="txtNewPasswordAgain">Nova senha novamente:</label>
+                            <input type="text" id="txtNewPasswordAgain" #txtNewPasswordAgain class="form-control"/>
+                        </div>
+                        <button class="btn btn-default pull-right" (click)="updatePassword(txtOldPassword.value, txtNewPassword.value, txtNewPasswordAgain.value);">Alterar senha</button>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" (click)="hideUser()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-primary" style="width: 80%; margin: 0px auto;">
+        <!-- Default panel contents -->
+        <div class="panel-heading">Lista de usuários</div>
+
+        <!-- Table -->
+        <table class="table table-hover">
+            <tr>
+                <th>Nome</th>
+                <th>Último login</th>
+            </tr>
+            <tr *ngFor="let user of users;" (click)="goToDetails(user)" style="cursor: pointer;">
+                <td>{{user.name}}</td>
+                <td>{{user.last_login | date: 'dd'}}/{{user.last_login | date:'MM'}}/{{user.last_login | date: 'yyyy'}} {{user.last_login | date: 'HH'}}:{{user.last_login | date: 'mm'}}</td>
+            </tr>
+        </table>
+    </div>
+</div>
