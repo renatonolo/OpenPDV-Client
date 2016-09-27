@@ -62,6 +62,11 @@ export class UserListComponent {
             var user = this.usersProvider.changePassword(this.username, oldPassword, newPassword);
             user.then((data: any) => {
                 console.log(data);
+                if(data.status == 1) this.updatePasswordError = data.error;
+                else {
+                    this.updatePasswordError = "";
+                    this.hideUser();
+                }
             }).catch(err => {
                 console.log("Error: " + err);
             });
