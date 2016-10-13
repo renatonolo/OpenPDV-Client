@@ -27,7 +27,13 @@
                             <input type="text" id="txtNewPasswordAgain" #txtNewPasswordAgain class="form-control"/>
                         </div>
                         <button class="btn btn-default" (click)="updatePassword(txtOldPassword.value, txtNewPassword.value, txtNewPasswordAgain.value);">Alterar senha</button>
-                    </div>
+                    </div><br/>
+                    <b>Permissoes:</b><br/>
+                    <input *ngIf="user.permissions.sales==1" type="checkbox" checked><input *ngIf="user.permissions.sales==0" type="checkbox"><i> Vendas</i><br/>
+                    <input *ngIf="user.permissions.products==1" type="checkbox" checked><input *ngIf="user.permissions.products==0" type="checkbox"><i> Produtos</i><br/>
+                    <input *ngIf="user.permissions.brands==1" type="checkbox" checked><input *ngIf="user.permissions.brands==0" type="checkbox"><i> Marcas</i><br/>
+                    <input *ngIf="user.permissions.reports==1" type="checkbox" checked><input *ngIf="user.permissions.reports==0" type="checkbox"><i> Relatórios</i><br/>
+                    <input *ngIf="user.permissions.users==1" type="checkbox" checked><input *ngIf="user.permissions.users==0" type="checkbox"><i> Usuários</i><br/>
                 </div>
 
                 <div class="modal-footer">

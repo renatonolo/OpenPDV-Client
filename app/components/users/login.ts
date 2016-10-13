@@ -110,6 +110,7 @@ export class LoginComponent {
                 localStorage.setItem('user_name', data.name);
                 localStorage.setItem('user_token', data.token);
                 localStorage.setItem('user_username', data.username);
+                localStorage.setItem('user_permissions', JSON.stringify(data.permissions));
                 if(this.rememberMe) {
                     localStorage.setItem('user_password', password);
                     localStorage.setItem('user_rememberMe', 'true');
@@ -124,6 +125,7 @@ export class LoginComponent {
                 localStorage.removeItem('user_name');
                 localStorage.removeItem('user_token');
                 localStorage.removeItem('user_username');
+                localStorage.removeItem('user_permissions');
                 this.loginError = 'Usuário ou senha inválidos. Tente novamente.';
             }
         }).catch(err => {

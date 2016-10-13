@@ -8,23 +8,23 @@
     <div class="panel-body">
 
         <div class="thumbnails">
-            <div class="thumbnail" (click)="goToSales()">
+            <div class="thumbnail" (click)="goToSales()" *ngIf="permissions.sales==1">
                 <div class="caption">Vender</div>
                 <span class="glyphicon glyphicon-shopping-cart" style="font-size: 75px"></span>
             </div>
-            <div class="thumbnail" (click)="goToProducts()">
+            <div class="thumbnail" (click)="goToProducts()" *ngIf="permissions.products==1">
                 <div class="caption">Produtos</div>
                 <span class="glyphicon glyphicon-th-list" style="font-size: 75px"></span>
             </div>
-            <div class="thumbnail" (click)="goToBrands()">
+            <div class="thumbnail" (click)="goToBrands()" *ngIf="permissions.brands==1">
                 <div class="caption">Marcas</div>
                 <span class="glyphicon glyphicon-grain" style="font-size: 75px"></span>
             </div>
-            <div class="thumbnail" (click)="goToReports()">
+            <div class="thumbnail" (click)="goToReports()" *ngIf="permissions.reports==1">
                 <div class="caption">Relatórios</div>
                 <span class="glyphicon glyphicon-list-alt" style="font-size: 75px"></span>
             </div>
-            <div class="thumbnail" (click)="goToUsers()">
+            <div class="thumbnail" (click)="goToUsers()" *ngIf="permissions.users==1">
                 <div class="caption">Usuários</div>
                 <span class="glyphicon glyphicon-list-alt" style="font-size: 75px"></span>
             </div>

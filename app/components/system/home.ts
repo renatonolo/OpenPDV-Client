@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 
 export class HomeComponent {
     token:string = localStorage.getItem('user_token');
+    permissions:any = JSON.parse(localStorage.getItem('user_permissions'));
 
     constructor(private router: Router){ }
 

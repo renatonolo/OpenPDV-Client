@@ -5,6 +5,7 @@ export class User{
     name: string;
     token: string;
     last_login: number;
+    permissions: any;
 
     parseJson(json){
         this.uuid = json.uuid;
@@ -13,5 +14,6 @@ export class User{
         this.name = json.name;
         this.token = json.token;
         this.last_login = json.last_login;
+        this.permissions = json.permissions;
     }
 }
