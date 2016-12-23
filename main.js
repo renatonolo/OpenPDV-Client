@@ -16,7 +16,7 @@ app.on('ready', function () {
     // Initialize the window to our specified dimensions
     mainWindow = new BrowserWindow({ width: 1200, height: 700 });
     mainWindow.maximize();
-    mainWindow.openDevTools();
+    //mainWindow.openDevTools();
     // Tell Electron where to load the entry point from
     mainWindow.loadURL('file://' + __dirname + '/index.html');
 
